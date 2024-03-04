@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->string('description');
+            $table->text('description');
             $table->string('lieu');
             $table->date('date');
             $table->integer('places_number');
             $table->foreignId('id_organisateur')->constrained('users');
-            $table->enum('validation', ['valid', 'invalid']);
-            $table->enum('status', ['available', 'notAvailable']);
+            $table->foreignId('category_id')->constrained('categories');
+            $table->enum('validation', ['valid', 'invalid'])->default('invalid');
+            $table->enum('status', ['available', 'notAvailable'])->default('available');
             $table->timestamps();
         });
     }

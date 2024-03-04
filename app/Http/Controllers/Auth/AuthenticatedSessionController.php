@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,7 +32,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = User::where('id', Auth::id())->first();
+
+        if ($user->HasRole('utilisateur')) {
+            return redirect()->route('utilisateur.home');
+        } elseif ($user->HasRole('admin')) {
+            return redirect()->route('admin.home');
+        } elseif ($user->HasRole('organisateur')) {
+            return redirect()->route('organisateur.home');
+        }
+
+        return back()->withInput()->withErrors(['email' => 'Invalid email or password']);
+        
     }
 
     /**

@@ -32,20 +32,37 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $randomNumbers = mt_rand(1000, 9999);
+
+        $username = $request->input('name');
+
+        $uniqueIdentifier = $username . '#' . $randomNumbers;
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
+            'identifiant_unique' => $uniqueIdentifier,
             'password' => Hash::make($request->password),
         ]);
 
+        if($user->role == 'utilisateur') {
+            $user->assignRole('utilisateur');
+        } elseif($user->role == 'organisateur'){
+            $user->assignRole('organisateur');
+        }
+
+        // dd($user->hasRole('organisateur'));
+
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('login');
     }
 }
