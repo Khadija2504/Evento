@@ -20,10 +20,12 @@ return new class extends Migration
             $table->string('lieu');
             $table->date('date');
             $table->integer('places_number');
+            $table->string('image');
             $table->foreignId('id_organisateur')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
-            $table->enum('validation', ['valid', 'invalid'])->default('invalid');
+            $table->enum('validation', ['valid', 'invalid', 'notYet'])->default('notYet');
             $table->enum('status', ['available', 'notAvailable'])->default('available');
+            $table->enum('acceptation', ['auto', 'manuelle'])->default('auto');
             $table->timestamps();
         });
     }

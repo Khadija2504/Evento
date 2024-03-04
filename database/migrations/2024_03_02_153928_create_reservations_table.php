@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users');
             $table->foreignId('id_event')->constrained('events');
             $table->integer('ticket_number')->unique();
-            $table->enum('status', ['valid', 'invalid']);
+            $table->enum('status', ['valid', 'invalid', 'notYet'])->default('notYet');
             $table->timestamps();
         });
     }

@@ -16,6 +16,29 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @role('organisateur')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('addEventForm')" :active="request()->routeIs('addEventForm')">
+                        {{ __('New event') }}
+                    </x-nav-link>
+                </div>
+                @endrole
+
+                @role('admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('listEventsDomand')" :active="request()->routeIs('listEventsDomand')">
+                        {{ __('events list') }}
+                    </x-nav-link>
+                </div>
+                @endrole
+
+                @role('utilisateur')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('myTickets')" :active="request()->routeIs('listEventsDomand')">
+                        {{ __('My tickets') }}
+                    </x-nav-link>
+                </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->

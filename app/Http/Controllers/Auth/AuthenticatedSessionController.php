@@ -34,12 +34,8 @@ class AuthenticatedSessionController extends Controller
 
         $user = User::where('id', Auth::id())->first();
 
-        if ($user->HasRole('utilisateur')) {
-            return redirect()->route('utilisateur.home');
-        } elseif ($user->HasRole('admin')) {
-            return redirect()->route('admin.home');
-        } elseif ($user->HasRole('organisateur')) {
-            return redirect()->route('organisateur.home');
+        if ($user->HasRole('utilisateur') || $user->HasRole('organisateur') || $user->hasRole('admin')) {
+            return redirect()->route('dashboard');
         }
 
         return back()->withInput()->withErrors(['email' => 'Invalid email or password']);
