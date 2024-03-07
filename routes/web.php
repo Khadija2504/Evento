@@ -48,6 +48,8 @@ Route::middleware(['auth', 'role:utilisateur'])->group(function (){
 
     Route::get('/filtre{id}', [EventController::class, 'filtre'])->name('filtre');
 
+    Route::get('/filtreDate/{date}', [EventController::class, 'filtreDate'])->name('filtreDate');
+
     // Browsershot::url('https://example.com')->save('reservetion.pdf');
     // Browsershot::url('http://127.0.0.1:8000/user/MyTickets')
     // ->save('ticket.pdf');

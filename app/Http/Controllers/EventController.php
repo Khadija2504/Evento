@@ -6,6 +6,7 @@ use App\Http\Requests\EventReuest;
 use App\Models\Categorie;
 use App\Models\Event;
 use App\Models\reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,12 @@ class EventController extends Controller
         $events = Event::where('validation', "valid")->where('status', "available")->with('organisateurs', 'category')->paginate(9);
         $organisateur = Auth::user()->id;
         $categories = Categorie::all();
-        return view('dashboard', compact('events', 'organisateur', 'categories'));
+        $music = Categorie::where('category_name', 'Music Concerts')->get();
+        $health = Categorie::where('category_name', 'Health & Wellness Events')->get();
+        $art = Categorie::where('category_name', 'Art Exhibitions')->get();
+        $food = Categorie::where('category_name', 'Food Festivals')->get();
+        $workshops = Categorie::where('category_name', 'Workshops')->get();
+        return view('dashboard', compact('events', 'organisateur', 'categories', 'music', 'health', 'art', 'food', 'workshops'));
     }
 
     public function addEventForm(){
@@ -69,7 +75,8 @@ class EventController extends Controller
 
     public function listEventsDomand(){
         $events = Event::where('validation', "notYet")->get();
-        return view('events.listEvents', compact('events'));
+        $invalidEvents = Event::where('validation', "invalid")->get();
+        return view('events.listEvents', compact('events', 'invalidEvents'));
     }
 
     public function validEvent($id){
@@ -109,6 +116,19 @@ class EventController extends Controller
         return view('events.filtre', compact('eventsResult', 'categories'));
     }
 
+    public function filtreDate($date){
+        // dd($date);
+        if($date == 'thisDay'){
+            $eventsResult = Event::whereDate('date', Carbon::today())->where('status', "available")->where('validation', "valid")->get();
+        } elseif($date == 'thisWeek'){
+            $eventsResult = Event::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('status', "available")->where('validation', "valid")->get();
+        } elseif($date == 'thisMonth'){
+            $eventsResult = Event::whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('status', "available")->where('validation', "valid")->get();
+        }else{
+            $eventsResult = Event::whereBetween('date', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->where('status', "available")->where('validation', "valid")->get();
+        }
+        return view('events.filtreDate', compact('eventsResult'));
+    }
     public function deleteEvent($id){
         $events = Event::where('id', $id);
         $erservetion = reservation::where('id_event', $id);
