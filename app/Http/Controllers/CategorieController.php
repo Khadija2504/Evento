@@ -2,84 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\categoryRequest;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class CategorieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function listCategories(){
+        $categories = Categorie::all();
+        return view('categories.listCategories', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function addCategoryForm(){
+        return view('categories.addCategory');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function addCategory(categoryRequest $request){
+        $validated = $request->validated();
+        Categorie::create($validated);
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Categorie $categorie)
-    {
-        //
+    public function deleteCategory($id){
+        $category = Categorie::where('id', $id);
+        $category->delete();
+        return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categorie $categorie)
-    {
-        //
+    public function editCategoryForm($id){
+        $categories = Categorie::where('id', $id)->get();
+        return view('categories.editCategoryForm', compact('categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Categorie $categorie)
-    {
-        //
+    public function editCategory(categoryRequest $request, $id){
+        $validated = $request->validated();
+        $category = Categorie::where('id', $id);
+        $category->update($validated);
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Categorie $categorie)
-    {
-        //
-    }
+
 }

@@ -10,11 +10,24 @@
                         <div>nombre des places restant: {{$event->places_number}}</div>
                         <div>La date de l'evenement:{{$event->date}}</div>
                         <div>lieu:{{$event->lieu}}</div>
+                        @role('organisateur')
                         @if($organisateur == $event->id_organisateur)
                             <form action="{{route('editEventForm', $event->id)}}" method="GET">
                                 <button type="submit">edit</button>
                             </form>
                         @endif
+                        @endrole
+                        @role('utilisateur')
+                            <form action="{{route('reservetion', $event->id)}}" method="POST">
+                                @csrf
+                                {{-- reservetion inputs --}}
+                                <input type="hidden" name="id_user" value="{{$organisateur}}" required>
+                                <input type="hidden" name="id_event" value="{{$event->id}}" required>
+                                <input type="hidden" name="ticket_number" value="0" required>
+                                <input type="hidden" name="status" value="notYet" required>
+                                <button type="submit">reserve in this event</button>
+                            </form>
+                        @endrole
                     @endforeach
                 </div>
             </div>

@@ -30,12 +30,22 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'role' => ['required', 'string'],
+            'avatar' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $file_extension = $file->getClientOriginalExtension();
+            $file_name = time() . '.' . $file_extension;
+            $path = 'imgs/images/';
+            $file->move($path, $file_name);
+            $validated['avatar'] = $path . '/' . $file_name;
+        }
 
         $randomNumbers = mt_rand(1000, 9999);
 
@@ -47,6 +57,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
+            'avatar' => $validated['avatar'],
             'identifiant_unique' => $uniqueIdentifier,
             'password' => Hash::make($request->password),
         ]);

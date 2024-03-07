@@ -1,6 +1,5 @@
 <x-app-layout>
 
-
     @foreach($reservations as $reservation)
     <div class="mx-auto mt-40 mb-10 flex items-center justify-center px-8">
         <div class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-3/5">
@@ -34,13 +33,24 @@
                                 </form>
                             @endif
                       </div>
+
+                      <div class="flex flex-row justify-center items-center">
+                        <form action="{{route('validReservation', $reservation->id)}}" method="GET">
+                            @csrf
+                            <button class="home-category_tile_component__tileLink">valid</button>
+                        </form>
+                        <form action="{{route('invalidReservation', $reservation->id)}}" method="get">
+                            @csrf
+                            <button class="home-category_tile_component__tileLink">invalid</button>
+                        </form>
+                    </div>
+
                   </div>
               </div>
           </div>
       </div>
     </div>
     @endforeach
-
 
     <div>
         

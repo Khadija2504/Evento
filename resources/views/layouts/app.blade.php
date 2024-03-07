@@ -11,6 +11,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/category.css">
+        <script src="https://cdn.tailwindcss.com"></script>
         <style>
             .gradient {
               background: linear-gradient(90deg, #d53369 0%, #daae51 100%);

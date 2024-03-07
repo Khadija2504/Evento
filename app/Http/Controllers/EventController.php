@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     public function dashboard() {
-        $events = Event::where('validation', "valid")->where('status', "available")->get();
-        $organisateur = auth::user()->id;
-        return view('dashboard', compact('events', 'organisateur'));
+        $events = Event::where('validation', "valid")->where('status', "available")->with('organisateurs', 'category')->paginate(9);
+        $organisateur = Auth::user()->id;
+        $categories = Categorie::all();
+        return view('dashboard', compact('events', 'organisateur', 'categories'));
     }
+
     public function addEventForm(){
         $categories = Categorie::all();
         $organisateur = Auth::user()->id;
@@ -86,4 +88,32 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function myEvents(){
+        $id_organisateur = Auth::user()->id;
+        // dd($id_organisateur);
+        $myEvents = Event::where('validation', "valid")->where('status', "available")->where('id_organisateur', $id_organisateur)->with('organisateurs', 'category')->get();
+        return view('events.myEvents', compact('myEvents', 'id_organisateur'));
+    }
+    
+    public function search(Request $request){
+        $search = $request->input('search');
+        $eventsResult = Event::where('titre', 'like', "%$search%")->where('validation', "valid")->where('status', "available")->with('organisateurs', 'category')->get();
+        $id_organisateur = Auth::user()->id;
+       
+        return view('events.search', compact('eventsResult', 'id_organisateur'));
+    }
+
+    public function filtre($id){
+        $eventsResult = Event::where('category_id', $id)->where('status', "available")->where('validation', "valid")->get();
+        $categories = Categorie::all();
+        return view('events.filtre', compact('eventsResult', 'categories'));
+    }
+
+    public function deleteEvent($id){
+        $events = Event::where('id', $id);
+        $erservetion = reservation::where('id_event', $id);
+        $erservetion->delete();
+        $events->delete();
+        return redirect()->back();
+    }
 }

@@ -45,7 +45,28 @@ class ReservationController extends Controller
     
     public function myTickets(){
         $user_id = Auth::user()->id;
-        $reservations = reservation::with('event')->where('id_user', $user_id)->get();
+        $reservations = reservation::with('event')->where('id_user', $user_id)->orderBy('updated_at')->get();
         return view('myTickets', compact('reservations'));
+    }
+
+    public function listReservationsDomand(){
+        $reservations = reservation::where('status', 'notYet')->with('event')->get();
+        return view('reservations.listReservationsDomand', compact('reservations'));
+    }
+    
+    public function validReservation($id){
+        $reservation = reservation::where('id', $id);
+        $reservation->update([
+            'status' => 'valid',
+        ]);
+        return redirect()->back();
+    }
+
+    public function invalidReservation($id){
+        $reservation = reservation::where('id', $id);
+        $reservation->update([
+            'status' => 'invalid',
+        ]);
+        return redirect()->back();
     }
 }

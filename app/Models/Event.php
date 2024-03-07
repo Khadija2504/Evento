@@ -24,4 +24,12 @@ class Event extends Model
     {
         return $this->hasMany(reservation::class, 'id_event');
     }
+
+    public function organisateurs(){
+        return $this->belongsTo(User::class, 'id_organisateur');
+    }
+
+    public function category(){
+        return $this->belongsTo(Categorie::class, 'category_id');
+    }
 }
