@@ -41,11 +41,9 @@
     </div>
     @endforeach
 
-
-    <div>
-        
+    <div class="flex flex-row justify-center items-center">
+        {{$reservations->links()}}
     </div>
 
 <x-footer/>
-
 </x-app-layout>

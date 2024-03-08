@@ -62,7 +62,6 @@ Route::post('/search', [EventController::class, 'search'])->name('search');
 // Browsershot::html('Hello world')->savePdf('reservetion.pdf');
 // Route::get('/pdf{id}', [InvoiceController::class, 'generate'])->name('generate');
 
-
 // organisateur
 Route::middleware(['auth', 'role:organisateur'])->group(function (){
     Route::get('/event/addForm', [EventController::class, 'addEventForm'])->name('addEventForm');
@@ -78,6 +77,8 @@ Route::middleware(['auth', 'role:organisateur'])->group(function (){
     Route::get('/reservation/invalid{id}', [ReservationController::class, 'invalidReservation'])->name('invalidReservation');
 
     Route::delete('/event/deleteEvent{id}', [EventController::class, 'deleteEvent'])->name('deleteEvent');
+
+    Route::get('/event/statistics/{id}', [EventController::class, 'statisticsReservation'])->name('statistics');
 });
 
 // admin
@@ -92,6 +93,12 @@ Route::middleware(['auth', 'role:admin'])->group(function (){
     Route::delete('/categories/delete{id}', [CategorieController::class, 'deleteCategory'])->name('deleteCategory');
     Route::get('/categories/editForm{id}', [CategorieController::class, 'editCategoryForm'])->name('editCategoryForm');
     Route::put('/categories/edit{id}', [CategorieController::class, 'editCategory'])->name('editCategory');
+
+    Route::get('/event/statisticsEvents', [EventController::class, 'statisticsEvents'])->name('statisticsEvents');
+
+    Route::get('/users/controllerList', [ProfileController::class, 'usersControllerList'])->name('usersControllerList');
+    Route::get('/users/userActive{id}', [ProfileController::class, 'userActive'])->name('userActive');
+    Route::get('/users/usersDisactive{id}', [ProfileController::class, 'userDisactive'])->name('userDisactive');
 });
 
 require __DIR__.'/auth.php';

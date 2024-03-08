@@ -33,13 +33,16 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = User::where('id', Auth::id())->first();
+        // dd();
 
-        if ($user->HasRole('utilisateur') || $user->HasRole('organisateur') || $user->hasRole('admin')) {
-            return redirect()->route('dashboard');
+            if($user->status == 'active'){
+                return redirect()->route('dashboard');
+        } else{
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('your account is disactivated');
         }
-
-        return back()->withInput()->withErrors(['email' => 'Invalid email or password']);
-        
     }
 
     /**

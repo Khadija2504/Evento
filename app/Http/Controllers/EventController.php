@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     public function dashboard() {
-        $events = Event::where('validation', "valid")->where('status', "available")->with('organisateurs', 'category')->paginate(9);
+        $events = Event::where('validation', "valid")->where('status', "available")->with('organisateurs', 'category')->orderBy('date', 'desc')->paginate(9);
+        foreach($events as $event){
+            $reservetionCount = Event::withCount('reservation')->where('id', $event->id)->get();
+        }
         $organisateur = Auth::user()->id;
         $categories = Categorie::all();
         $music = Categorie::where('category_name', 'Music Concerts')->get();
@@ -21,6 +24,9 @@ class EventController extends Controller
         $art = Categorie::where('category_name', 'Art Exhibitions')->get();
         $food = Categorie::where('category_name', 'Food Festivals')->get();
         $workshops = Categorie::where('category_name', 'Workshops')->get();
+        if(isset($reservetionCount)){
+            return view('dashboard', compact('events', 'organisateur', 'categories', 'music', 'health', 'art', 'food', 'workshops', 'reservetionCount'));
+        }
         return view('dashboard', compact('events', 'organisateur', 'categories', 'music', 'health', 'art', 'food', 'workshops'));
     }
 
@@ -135,5 +141,24 @@ class EventController extends Controller
         $erservetion->delete();
         $events->delete();
         return redirect()->back();
+    }
+
+    public function statisticsReservation($id){
+        $events = Event::where('id', $id)->get();
+        $reservationCount = reservation::where('id_event', $id)->count();
+        $validReaervationCount = reservation::where('id_event', $id)->where('status', "valid")->count();
+        $invalidReaervationCount = reservation::where('id_event', $id)->where('status', "invalid")->count();
+        // foreach($events as $event){
+        //     dd($event);
+        // }
+        return view('events.statistics', compact('events','reservationCount', 'validReaervationCount', 'invalidReaervationCount'));
+    }
+
+    public function statisticsEvents(){
+        $validEvents = Event::where('validation', "invalid")->count();
+        $invalidEvents = Event::where('validation', "invalid")->count();
+        $availableEvents = Event::where('status', "available")->count();
+        $unavailableEvents = Event::where('status', "notAvailable")->count();
+        return view('events.statisticsEvents', compact('invalidEvents', 'validEvents', 'availableEvents', 'unavailableEvents'));
     }
 }

@@ -196,6 +196,8 @@
     </div>
     @endrole
 
+    @if(isset($events))
+
     <div class="home-category_tiles_block_component__wrapper">
         <div class="home-category_tiles_block_component__tiles">
             @foreach($events as $event)
@@ -209,6 +211,9 @@
               
                   <a class="home-category_tile_component__tileLink" title="Newest After Effects" data-action="analytics-event#send" data-analytics-event="{&quot;eventLabel&quot;:&quot;after-effects-project-files: newest&quot;,&quot;eventAction&quot;:&quot;click;link&quot;,&quot;hitType&quot;:&quot;event&quot;,&quot;eventCategory&quot;:&quot;Block interaction;Category&quot;}" href="{{route('showDetails', $event->id)}}">total places: {{$event->places_number}}</a>
                   <a class="home-category_tile_component__tileLink" title="Bestselling After Effects" data-action="analytics-event#send" data-analytics-event="{&quot;eventLabel&quot;:&quot;after-effects-project-files: bestsellers&quot;,&quot;eventAction&quot;:&quot;click;link&quot;,&quot;hitType&quot;:&quot;event&quot;,&quot;eventCategory&quot;:&quot;Block interaction;Category&quot;}" href="{{route('showDetails', $event->id)}}">{{$event->category->category_name}}</a>
+                  @foreach($reservetionCount as $reservations)
+                    <a >Nombre des places restant: {{$event->places_number - $reservations->reservation_count}}</a>
+                  @endforeach
                 </div>
                 <a class="home-category_tile_component__tileArt" title="View After Effects" href="{{route('showDetails', $event->id)}}">
                   <div class="home-category_tile_component__imageIconWrapper">
@@ -224,6 +229,9 @@
             @endforeach
         </div>
     </div>
+    @else
+    <div>No result</div>
+    @endif
     <div class="flex items-center justify-center"> {{$events->links()}} </div>
 
     <div>

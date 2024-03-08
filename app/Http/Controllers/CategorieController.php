@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategorieController extends Controller
 {
     public function listCategories(){
-        $categories = Categorie::all();
+        $categories = Categorie::orderBy('updated_at', 'desc')->paginate(15);
         return view('categories.listCategories', compact('categories'));
     }
 

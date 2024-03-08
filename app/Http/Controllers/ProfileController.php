@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +57,26 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function usersControllerList(){
+        $users = User::where('role', 'utilisateur')->get();
+        return view('profile.usersControllerList', compact('users'));
+    }
+
+    public function userActive($id){
+        $users = User::where('id', $id);
+        $users->update([
+            'status' => 'active',
+        ]);
+
+        return redirect()->back();
+    }
+    public function userDisactive($id){
+        $users = User::where('id', $id);
+        $users->update([
+          'status' => 'disactive',
+        ]);
+        return redirect()->back();
     }
 }
