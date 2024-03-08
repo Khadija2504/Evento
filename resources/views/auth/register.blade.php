@@ -64,6 +64,13 @@
             <x-primary-button class="ml-4">
                 {{ __('Register') }}
             </x-primary-button>
-        </div>
+        </div>        
     </form>
+    <form action="{{route('googleAuthentication')}}">
+        @csrf
+        <x-primary-button class="ml-4">
+            {{ __('continue with google') }}
+        </x-primary-button>
+    </form>
+        
 </x-guest-layout>

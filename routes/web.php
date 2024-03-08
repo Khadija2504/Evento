@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\googleAuthController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
@@ -100,5 +101,10 @@ Route::middleware(['auth', 'role:admin'])->group(function (){
     Route::get('/users/userActive{id}', [ProfileController::class, 'userActive'])->name('userActive');
     Route::get('/users/usersDisactive{id}', [ProfileController::class, 'userDisactive'])->name('userDisactive');
 });
+
+// google authentification
+
+Route::get('/auth/google', [googleAuthController::class, 'redirect'])->name('googleAuthentication');
+Route::get('/auth/google/call-back', [googleAuthController::class, 'handleGoogleCallback'])->name('googleAuthenticationCallback');
 
 require __DIR__.'/auth.php';
