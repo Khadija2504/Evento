@@ -5,16 +5,13 @@
         <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
           <!--Left Col-->
           <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-            <p class="uppercase tracking-loose w-full">What business are you?</p>
+            <p class="uppercase tracking-loose w-full">Do you love funy events?</p>
             <h1 class="my-4 text-5xl font-bold leading-tight">
-              Main Hero Message to sell yourself!
+              You are in the right way!
             </h1>
             <p class="leading-normal text-2xl mb-8">
-              Sub-hero message, not too long and not too short. Make it just right!
+              Evento is the best web site to make your events and reserve for the events that you are interested in!
             </p>
-            <button class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-              Subscribe
-            </button>
           </div>
           <!--Right Col-->
           <div class="w-full md:w-3/5 py-6 text-center">
@@ -42,72 +39,15 @@
         </svg>
       </div>
     </div>
-
+    
     @role('utilisateur')
-    <div class="hidden sm:flex sm:items-center sm:ml-6">
-        <x-dropdown align="right" width="48">
-            <x-slot name="trigger">
-                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                    <div>Get by category</div>
-                    <div class="ml-1">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </button>
-            </x-slot>
-
-            <x-slot name="content">
-                @foreach ($categories as $category)
-                    <form action="{{route('filtre', $category->id)}}" method="GET">
-                        <button type="submit">{{$category->category_name}}</button>
-                    </form>
-                @endforeach
-            </x-slot>
-        </x-dropdown>
-    </div>
-
-    <div class="hidden sm:flex sm:items-center sm:ml-6">
-        <x-dropdown align="right" width="48">
-            <x-slot name="trigger">
-                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                    <div>Get by date</div>
-                    <div class="ml-1">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </button>
-            </x-slot>
-
-            <x-slot name="content">
-                <form action="{{route('filtreDate', 'thisDay')}}" method="GET">
-                    @csrf
-                    <button type="submit">This Day</button>
-                </form>
-                <form action="{{route('filtreDate', 'thisMonth')}}" method="GET">
-                    @csrf
-                    <button type="submit">This Month</button>
-                </form>
-                <form action="{{route('filtreDate', 'thisWeek')}}" method="GET">
-                    @csrf
-                    <button type="submit">This Week</button>
-                </form>
-                <form action="{{route('filtreDate', 'thisYear')}}" method="GET">
-                    @csrf
-                    <button type="submit">This Year</button>
-                </form>
-            </x-slot>
-        </x-dropdown>
-    </div>
-
-    <div>the most categories used</div>
+    <div class=" text-center mt-16 mb-16 text-5xl">the most categories used</div>
     
     {{-- categories --}}
     <div class="browse-section">
         <section class="iconCategoryBrowse" data-testid="icon-category-browse">
             
-            <div class="iconCategoryWrapper flex flex-row justify-center items-center" style="gap: 5%; overflow: scroll;">
+            <div class="iconCategoryWrapper flex flex-row justify-center items-center pb-16" style="gap: 5%; overflow-x: scroll;">
                 <a data-testid="category-card" data-heap-id="homepage-category-tiles">
                     @foreach ($music as $category)
                     <form action="{{route('filtre', $category->id)}}">
@@ -194,11 +134,78 @@
             </div>
         </section>
     </div>
+
+    <div class="flex flex-wrap justify-center items-center mt-10 mb-20">
+        <div class="hidden sm:flex sm:items-center sm:ml-6" style="width: 25%">
+            <div style="width: 100%">
+            <x-dropdown align="right" width="45">
+                <x-slot name="trigger">
+                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white dark:text-gray-400 gradient dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style="width: 100%">
+                        <div>Get by category</div>
+                        <div class="ml-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+    
+                <x-slot name="content">
+                <div style=" height: 250px; overflow-y: scroll;">
+                    @foreach ($categories as $category)
+                        <form action="{{route('filtre', $category->id)}}" method="GET">
+                            <button style="margin: 2%;" type="submit">{{$category->category_name}}</button>
+                        </form>
+                    @endforeach
+                </div>
+                </x-slot>
+            </x-dropdown>
+        </div>
+        </div>
+
+        <div class="hidden sm:flex sm:items-center sm:ml-6" style="width: 25%">
+            <div style="width: 100%">
+            <x-dropdown align="right">
+                <x-slot name="trigger">
+                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white dark:text-gray-400 gradient dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style="width: 100%">
+                        <div>Get by date</div>
+                        <div class="ml-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+                <x-slot name="content">
+                <div class=" bg-slate-50 ml-50">
+                    
+                    <form action="{{route('filtreDate', 'thisDay')}}" method="GET">
+                        @csrf
+                        <button type="submit" style="margin: 3%">This Day</button>
+                    </form>
+                    <form action="{{route('filtreDate', 'thisMonth')}}" method="GET">
+                        @csrf
+                        <button type="submit" style="margin: 3%">This Month</button>
+                    </form>
+                    <form action="{{route('filtreDate', 'thisWeek')}}" method="GET">
+                        @csrf
+                        <button type="submit" style="margin: 3%">This Week</button>
+                    </form>
+                    <form action="{{route('filtreDate', 'thisYear')}}" method="GET">
+                        @csrf
+                        <button type="submit" style="margin: 3%">This Year</button>
+                    </form>
+                </div>
+                </x-slot>
+            </x-dropdown>
+        </div>
+        </div>
+    </div>
     @endrole
 
     @if(isset($events))
 
-    <div class="home-category_tiles_block_component__wrapper">
+    <div class="home-category_tiles_block_component__wrapper mb-20 mt-20">
         <div class="home-category_tiles_block_component__tiles">
             @foreach($events as $event)
             <div class="home-category_tile_component__root">
@@ -221,7 +228,7 @@
                       <img src="{{asset(''. $event->image)}}">
                     </picture>
                     <div class="home-category_tile_component__tileIcon">
-                      <img alt="Avatar" width="64" height="64" loading="lazy" src="{{asset(''. $event->organisateurs->avatar)}}">
+                      <img alt="Avatar" width="64" height="64" loading="lazy" class="w-[64px] h-[64px] rounded-full shadow-2xl object-cover" src="{{asset(''. $event->organisateurs->avatar)}}">
                     </div>
                   </div>
                 </a>

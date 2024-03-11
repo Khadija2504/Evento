@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('identifiant_unique')->unique()->nullable();
             $table->enum('status', ['active', 'disactive'])->default('active');
+            $table->enum('reserve', ['active', 'disactive'])->default('active');
             $table->enum('role', ['organisateur', 'admin', 'utilisateur']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

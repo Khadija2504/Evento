@@ -1,5 +1,10 @@
 <x-app-layout>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-4">
+    @if(session()->has('deleteCategory'))
+        <div class="bg-green-100 border text-center border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('deleteCategory') }}</span>
+        </div>
+    @endif
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-10">
         @foreach ($categories as $category)
 
         <div class="card shadow-md rounded-lg p-6">

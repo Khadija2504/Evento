@@ -416,7 +416,7 @@ ol,ul {
 }
 
 :root {
-    --container-width: 1408px;
+    --container-width: 100%;
     --color-brand--envato: #82b441;
     --color-brand--powerelite: #80b253;
     --color-brand--audiojungle: #99c030;
@@ -3293,7 +3293,7 @@ ol,ul {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    max-width: var(--container-width);
+    max-width: 100%;
     padding-left: 10px;
     padding-right: 10px
 }

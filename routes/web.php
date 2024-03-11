@@ -23,9 +23,7 @@ use Spatie\Browsershot\Browsershot;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [EventController::class, 'welcome']);
 
 Route::get('/dashboardUser', function () {
     return view('home');
@@ -100,11 +98,16 @@ Route::middleware(['auth', 'role:admin'])->group(function (){
     Route::get('/users/controllerList', [ProfileController::class, 'usersControllerList'])->name('usersControllerList');
     Route::get('/users/userActive{id}', [ProfileController::class, 'userActive'])->name('userActive');
     Route::get('/users/usersDisactive{id}', [ProfileController::class, 'userDisactive'])->name('userDisactive');
+
+    Route::get('/users/reservationActive/{id}', [ProfileController::class, 'userReservationActive'])->name('userReservationActive');
+    Route::get('/uses/reservationDisactive/{id}', [ProfileController::class, 'userReservationDisactive'])->name('userReservationDisactive');
 });
 
 // google authentification
 
-Route::get('/auth/google', [googleAuthController::class, 'redirect'])->name('googleAuthentication');
+Route::get('/auth/google/utilisateur', [googleAuthController::class, 'redirect'])->name('googleAuthentication');
 Route::get('/auth/google/call-back', [googleAuthController::class, 'handleGoogleCallback'])->name('googleAuthenticationCallback');
+
+Route::get('/auth/google/organisateur', [googleAuthController::class, 'handleGoogleCallbackOrganisateur'])->name('googleAuthenticationCallbackOrganisateur');
 
 require __DIR__.'/auth.php';

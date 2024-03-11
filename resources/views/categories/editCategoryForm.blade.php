@@ -1,5 +1,10 @@
 <x-app-layout>
     <x-guest-layout>
+        @if(session()->has('updateCategory'))
+            <div class="bg-green-100 border text-center border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('updateCategory') }}</span>
+            </div>
+        @endif
             @foreach ($categories as $category)
         <form method="POST" action="{{ route('editCategory', $category->id) }}">
             @csrf

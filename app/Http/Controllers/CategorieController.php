@@ -20,13 +20,13 @@ class CategorieController extends Controller
     public function addCategory(categoryRequest $request){
         $validated = $request->validated();
         Categorie::create($validated);
-        return redirect()->back();
+        return redirect()->back()->with('addCategory', 'seccessfully added category');
     }
 
     public function deleteCategory($id){
         $category = Categorie::where('id', $id);
         $category->delete();
-        return redirect()->back();
+        return redirect()->back()->with('deleteCategory', 'seccessfully deleted category');
     }
 
     public function editCategoryForm($id){
@@ -38,7 +38,7 @@ class CategorieController extends Controller
         $validated = $request->validated();
         $category = Categorie::where('id', $id);
         $category->update($validated);
-        return redirect()->back();
+        return redirect()->back()->with('updateCategory', 'seccessfylly updated category');
     }
 
 

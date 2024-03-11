@@ -40,7 +40,7 @@ class ReservationController extends Controller
                 ]);
             }
         }
-        return redirect()->back();
+        return redirect()->back()->with('reservation', 'your reservation has been updated');
     }
     
     public function myTickets(){

@@ -65,10 +65,10 @@ class RegisteredUserController extends Controller
         if($user->role == 'utilisateur') {
             $user->assignRole('utilisateur');
         } elseif($user->role == 'organisateur'){
-            $user->assignRole('organisateur');
+            $user->assignRole('organisateur'); 
         }
 
-        // dd($user->hasRole('organisateur'));
+        // dd($user->hasRole('utilisateur'));
 
         event(new Registered($user));
 

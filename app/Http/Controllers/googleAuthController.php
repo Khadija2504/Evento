@@ -31,7 +31,35 @@ class googleAuthController extends Controller
                     'identifiant_unique' => $identifiant_unique,
                     'role' => 'utilisateur',
                 ]);
-                // $user->assignRole('utilisateur');
+                $new_user->assignRole('utilisateur');
+                Auth::login($new_user);
+                return redirect()->intended('dashboard');
+            } else {
+                Auth::login($user);
+                return redirect()->intended('dashboard');
+            }
+        } catch (\Throwable $th) {
+            dd("something went wrong! " . $th->getMessage());
+        }
+    }
+
+    public function handleGoogleCallbackOrganisateur(){
+        try {
+            $google_user = Socialite::driver('google')->user();
+            
+            $user = User::where('social_id', $google_user->getId())->first();
+            $randomNumbers = mt_rand(1000, 9999);
+            $identifiant_unique = $google_user->getName() . '#' . $randomNumbers;
+            if (!$user) {
+                $new_user = User::create([
+                    'name' => $google_user->getName(),
+                    'email' => $google_user->getEmail(),
+                    'google_id' => $google_user->getId(),
+                    'avatar' => $google_user->getAvatar(),
+                    'identifiant_unique' => $identifiant_unique,
+                    'role' => 'organisateur',
+                ]);
+                // $user->assignRole('organisateur');
                 Auth::login($new_user);
                 return redirect()->intended('dashboard');
             } else {

@@ -5,9 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
+                        <x-application-logo class="block h-20 w-auto fill-current text-gray-800 dark:text-gray-200" />
                 </div>
 
                 <!-- Navigation Links -->
@@ -60,6 +58,12 @@
                         {{ __('users list') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('statisticsEvents')" :active="request()->routeIs('listCategories')">
+                        {{ __('Statistics') }}
+                    </x-nav-link>
+                </div>
                 @endrole
 
                 @role('utilisateur')
@@ -72,7 +76,7 @@
 
             </div>
 
-            <div class="mx-auto" style="width: 45%; margin-right: 0px; margin-top: 0.5%">
+            <div class="mx-auto" style="width: 30%; margin-right: 0px; margin-top: 0.5%">
                 <form method="POST" action="{{route('search')}}">   
                     @csrf
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
@@ -81,7 +85,7 @@
                             <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                         <input id="myInput" value="{{request()->search ?? ''}}" type="search" name="search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for an event" required>
-                        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2" style="background: linear-gradient(90deg, #d53369 0%, #daae51 100%);">Search</button>
                     </div>
                 </form>
             </div>

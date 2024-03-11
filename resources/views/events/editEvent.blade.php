@@ -1,5 +1,10 @@
 <x-app-layout>
     <x-guest-layout>
+        @if(session()->has('update'))
+            <div class="bg-green-100 border text-center border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('update') }}</span>
+            </div>
+        @endif
     @foreach($events as $event)
         <form method="POST" action="{{ route('editEvent', $event->id) }}" enctype="multipart/form-data">
             @csrf

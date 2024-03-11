@@ -64,12 +64,12 @@
             <x-primary-button class="ml-4">
                 {{ __('Register') }}
             </x-primary-button>
-        </div>        
+        </div>
     </form>
     <form action="{{route('googleAuthentication')}}">
         @csrf
         <x-primary-button class="ml-4">
-            {{ __('continue with google') }}
+            {{ __('continue with google as a user') }}
         </x-primary-button>
     </form>
         

@@ -79,4 +79,20 @@ class ProfileController extends Controller
         ]);
         return redirect()->back();
     }
+
+    public function userReservationActive($id){
+        $users = User::where('id', $id);
+        $users->update([
+            'reserve' => 'active',
+        ]);
+        return redirect()->back();
+    }
+
+    public function userReservationDisactive($id){
+        $users = User::where('id', $id);
+        $users->update([
+            'reserve' => 'disactive',
+        ]);
+        return redirect()->back();
+    }
 }
